@@ -1,4 +1,4 @@
-This project will contain price trackers for various websites. The goal is to collect the prices
+This project contains price trackers for various websites. The goal is to collect the prices
 to track overtime to allow consumers to get the best prices for their products. Since there are many
 e-commerce websites, it is important that users get the data from more than one place, and that may be
 difficult with the different SKUs and other elements.
