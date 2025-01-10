@@ -1,0 +1,23 @@
+This project will contain price trackers for various websites. The goal is to collect the prices
+to track overtime to allow consumers to get the best prices for their products. Since there are many
+e-commerce websites, it is important that users get the data from more than one place, and that may be
+difficult with the different SKUs and other elements.
+
+Features
+- Track a product's price from select websites that will produce a graph of the price
+    over a span of time
+- Track the price across different websites to produce a graph that compares the prices
+    for the websites. To do so, need to find the product from the other website(s) that
+    most closely matches the product(s).
+    Maybe a user wants to buy an Xbox controller from BestBuy, so then this program
+    will search for other websites for this specific controller spec. and compare the prices.
+
+Websites tracked includes:
+- BestBuy
+    https://www.bestbuy.com/
+- Amazon
+    https://www.amazon.com/ref=nav_logo
+
+Documentation
+Selenium: https://www.selenium.dev/documentation/
+
