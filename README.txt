@@ -12,6 +12,15 @@ Features
     Maybe a user wants to buy an Xbox controller from BestBuy, so then this program
     will search for other websites for this specific controller spec. and compare the prices.
 
+Potential Features
+- For searching for the product across websites, use a weight system
+    with a database of things with the weights
+    The brand name and model name could have a high weight,
+    while things like color and things are lower weights
+- A Chrome extension
+- A web app
+- An android app
+
 Websites tracked includes:
 - BestBuy
     https://www.bestbuy.com/
