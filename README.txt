@@ -11,6 +11,8 @@ Features
     most closely matches the product(s).
     Maybe a user wants to buy an Xbox controller from BestBuy, so then this program
     will search for other websites for this specific controller spec. and compare the prices.
+- Create a website that visualizes this (similar to camelcamelcamel.com), except with multiple sources,
+    rather than just amazon.com
 
 Potential Features
 - For searching for the product across websites, use a weight system
