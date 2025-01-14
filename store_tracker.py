@@ -34,7 +34,7 @@ def track_amazon(item_url) -> float:
     price_element = driver.find_element(By.CLASS_NAME, 'a-price-whole')
     price = float(price_element.text)
     price_cent_element = driver.find_element(By.CLASS_NAME, 'a-price-fraction')
-    price += float(price_cent_element.text) * 0.01
+    price += float(price_cent_element.text) * 0.01  # convert to cents
     driver.quit()
 
     return price
@@ -50,12 +50,40 @@ def track_amazon(item_url) -> float:
 
 # not all products are available on one or both websites
 # likely discontinued or something
+# takes in a link from bestbuy.com and outputs a string to amazon.com
+# finds the best match based on the product item
+# looks at the first three results to find the closest match to the item title from BestBuy
 def bestbuy_to_amazon(item_url) -> str:
-    return ""
+    driver = webdriver.Firefox()
+    driver.get(item_url)
+    time.sleep(0.5)
+
+    item_title = driver.find_element(By.CLASS_NAME, 'heading-4').text
+    # driver.quit()
+
+    # searches for the item's title that was retrieved on the searchbar
+    driver.get('https://www.amazon.com/ref=nav_logo')
+    driver.implicitly_wait(0.5)
+    driver.find_element(By.ID, 'twotabsearchtextbox').click()
+    driver.find_element(By.ID, 'twotabsearchtextbox').send_keys(item_title, Keys.ENTER)
+
+    # finds the best match of the first three results
 
 
+    # retrieves the current url from amazon.com of the matching product
+    item_to_amazon = driver.current_url
+
+    driver.quit()
+
+    return item_to_amazon
+
+
+x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-10-9-inch-ipad-latest-model-10th-'
+                      'generation-with-wi-fi-64gb-pink/5201002.p?skuId=5201002')
+print(x)
+
+
+# takes in a link from amazon.comb and outputs a string to bestbuy.com
+# finds the best match based on the product item
 def amazon_to_bestbuy(item_url) -> str:
     return ""
-
-
-

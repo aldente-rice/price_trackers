@@ -30,3 +30,8 @@ Websites tracked includes:
 Documentation
 Selenium: https://www.selenium.dev/documentation/
 
+Other
+'Fuzzy String Search' - approximate string matching
+    https://stackoverflow.com/questions/5859561/getting-the-closest-string-match
+    https://stackoverflow.com/questions/32337135/fuzzy-search-algorithm-approximate-string-matching-algorithm
+
