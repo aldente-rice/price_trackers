@@ -18,7 +18,7 @@ Potential Features
 - For searching for the product across websites, use a weight system
     with a database of things with the weights
     The brand name and model name could have a high weight,
-    while things like color and things are lower weights
+    while things like color and things are lowe r weights
 - A Chrome extension
 - A web app
 - An android app
