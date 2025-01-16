@@ -65,6 +65,7 @@ def bestbuy_to_amazon(item_url) -> str:
 
     # searches for the item's title that was retrieved on the searchbar
     driver.get('https://www.amazon.com/')
+    time.sleep(2)
     driver.implicitly_wait(1)
 
     # WebDriverWait(driver, 5).until(
