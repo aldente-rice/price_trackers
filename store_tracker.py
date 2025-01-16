@@ -4,6 +4,8 @@ import selenium.webdriver.firefox
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 def track_best_buy(item_url) -> float:
@@ -62,13 +64,30 @@ def bestbuy_to_amazon(item_url) -> str:
     # driver.quit()
 
     # searches for the item's title that was retrieved on the searchbar
-    driver.get('https://www.amazon.com/ref=nav_logo')
-    driver.implicitly_wait(0.5)
-    driver.find_element(By.ID, 'twotabsearchtextbox').click()
-    driver.find_element(By.ID, 'twotabsearchtextbox').send_keys(item_title, Keys.ENTER)
+    driver.get('https://www.amazon.com/')
+    driver.implicitly_wait(1)
+
+    # WebDriverWait(driver, 5).until(
+    #     EC.presence_of_element_located((By.ID, 'twotabsearchtextbox'))
+    # )
+
+    driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').click()
+    # search_bar.find_element(By.ID, 'twotabsearchtextbox').click()
+    # driver.find_element(By.ID, 'twotabsearchtextbox')
+    driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').send_keys(item_title, Keys.ENTER)
+    time.sleep(2)
 
     # finds the best match of the first three results
+    WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span'))
+    )
+    # print(type(item))
 
+    a = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
+    driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
+    driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[5]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
+    print(a.text)
+    # print(type(a))
 
     # retrieves the current url from amazon.com of the matching product
     item_to_amazon = driver.current_url
@@ -78,8 +97,7 @@ def bestbuy_to_amazon(item_url) -> str:
     return item_to_amazon
 
 
-x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-10-9-inch-ipad-latest-model-10th-'
-                      'generation-with-wi-fi-64gb-pink/5201002.p?skuId=5201002')
+x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-10-9-inch-ipad-latest-model-10th-generation-with-wi-fi-64gb-pink/5201002.p?skuId=5201002')
 print(x)
 
 
