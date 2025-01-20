@@ -34,6 +34,7 @@ Websites tracked includes:
 
 Documentation
 Selenium: https://www.selenium.dev/documentation/
+amazoncaptcha: https://pypi.org/project/amazoncaptcha/
 
 Other
 'Fuzzy String Search' - approximate string matching

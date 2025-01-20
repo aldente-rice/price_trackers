@@ -2,10 +2,12 @@ import selenium
 import time
 import selenium.webdriver.firefox
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+import amazoncaptcha as AC
 
 
 def track_best_buy(item_url) -> float:
@@ -54,7 +56,7 @@ def track_amazon(item_url) -> float:
 # likely discontinued or something
 # takes in a link from bestbuy.com and outputs a string to amazon.com
 # finds the best match based on the product item
-# looks at the first three results to find the closest match to the item title from BestBuy
+# looks at the first few results to find the closest match to the item title from BestBuy (that aren't sponsored)
 def bestbuy_to_amazon(item_url) -> str:
     driver = webdriver.Firefox()
     driver.get(item_url)
@@ -65,7 +67,7 @@ def bestbuy_to_amazon(item_url) -> str:
 
     # searches for the item's title that was retrieved on the searchbar
     driver.get('https://www.amazon.com/')
-    time.sleep(2)
+    time.sleep(5)
     driver.implicitly_wait(1)
 
     # WebDriverWait(driver, 5).until(
@@ -79,16 +81,29 @@ def bestbuy_to_amazon(item_url) -> str:
     time.sleep(2)
 
     # finds the best match of the first three results
-    WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span'))
-    )
+    # WebDriverWait(driver, 5).until(
+    #     EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/
+    #                                               div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span'))
+    # )
     # print(type(item))
 
-    a = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
-    driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[2]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
-    driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[5]/div/div/span/div/div/div/div[2]/div/div/div[1]/a/h2/span')
-    print(a.text)
-    # print(type(a))
+    results = []
+    for i in range(2, 6):
+        try:
+            result_title = driver.find_element(By.XPATH,f'/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/'
+                                                        f'div[1]/div[{i}]/div/div/span/div/div/div/div[2]/div/div/'
+                                                        f'div[1]/a/h2/span')
+            # if element is 'sponsored', continue
+        except NoSuchElementException:
+            continue
+
+        results.append(result_title.text)
+
+    # for item in results:
+    #     print(item)
+
+    # does a 'fuzzy string search' to return the best match
+    results_match =
 
     # retrieves the current url from amazon.com of the matching product
     item_to_amazon = driver.current_url
@@ -98,7 +113,7 @@ def bestbuy_to_amazon(item_url) -> str:
     return item_to_amazon
 
 
-x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-10-9-inch-ipad-latest-model-10th-generation-with-wi-fi-64gb-pink/5201002.p?skuId=5201002')
+x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384')
 print(x)
 
 
