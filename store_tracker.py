@@ -99,11 +99,11 @@ def bestbuy_to_amazon(item_url) -> str:
 
         results.append(result_title.text)
 
-    # for item in results:
-    #     print(item)
+    for item in results:
+        print(item)
 
     # does a 'fuzzy string search' to return the best match
-    results_match =
+    # results_match =
 
     # retrieves the current url from amazon.com of the matching product
     item_to_amazon = driver.current_url

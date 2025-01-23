@@ -29,12 +29,11 @@ Websites tracked includes:
 - Amazon
     https://www.amazon.com/ref=nav_logo
 
-
-
-
 Documentation
 Selenium: https://www.selenium.dev/documentation/
 amazoncaptcha: https://pypi.org/project/amazoncaptcha/
+thefuzz: https://github.com/seatgeek/thefuzz
+    https://www.geeksforgeeks.org/fuzzywuzzy-python-library/#
 
 Other
 'Fuzzy String Search' - approximate string matching
