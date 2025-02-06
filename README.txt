@@ -32,13 +32,8 @@ Websites tracked includes:
 Documentation
 Selenium: https://www.selenium.dev/documentation/
 amazoncaptcha: https://pypi.org/project/amazoncaptcha/
-thefuzz: https://github.com/seatgeek/thefuzz
-    https://www.geeksforgeeks.org/fuzzywuzzy-python-library/#
 
 Other
-'Fuzzy String Search' - approximate string matching
-    https://stackoverflow.com/questions/5859561/getting-the-closest-string-match
-    https://stackoverflow.com/questions/32337135/fuzzy-search-algorithm-approximate-string-matching-algorithm
 bypass Google's captcha:
     https://stackoverflow.com/questions/58872451/how-can-i-bypass-the-google-captcha-with-selenium-and-python
     https://stackoverflow.com/questions/49565042/way-to-change-google-chrome-user-agent-in-selenium/49565254#49565254

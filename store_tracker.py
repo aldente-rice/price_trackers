@@ -1,13 +1,11 @@
-import selenium
 import time
-import selenium.webdriver.firefox
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import amazoncaptcha as AC
+from amazoncaptcha import AmazonCaptcha
 
 
 def track_best_buy(item_url) -> float:
@@ -67,7 +65,13 @@ def bestbuy_to_amazon(item_url) -> str:
 
     # searches for the item's title that was retrieved on the searchbar
     driver.get('https://www.amazon.com/')
-    time.sleep(5)
+    driver.implicitly_wait(1)
+    # remove captcha
+    captcha_img = driver.find_element(By.XPATH, '//*[@div="a-row a-text-center"]//img').get_attribute('src')
+    captcha = AmazonCaptcha.fromlink(captcha_img)
+    solution = captcha.solve()
+    driver.find_element(By.ID, 'captchacharacters').click()
+    driver.find_element(By.ID, 'captchacharacters').send_keys(solution, Keys.ENTER)
     driver.implicitly_wait(1)
 
     # WebDriverWait(driver, 5).until(
