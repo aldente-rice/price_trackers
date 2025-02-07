@@ -66,19 +66,24 @@ def bestbuy_to_amazon(item_url) -> str:
     # searches for the item's title that was retrieved on the searchbar
     driver.get('https://www.amazon.com/')
     driver.implicitly_wait(1)
-    # remove captcha
-    captcha_img = driver.find_element(By.XPATH, '//*[@div="a-row a-text-center"]//img').get_attribute('src')
-    captcha = AmazonCaptcha.fromlink(captcha_img)
-    solution = captcha.solve()
-    driver.find_element(By.ID, 'captchacharacters').click()
-    driver.find_element(By.ID, 'captchacharacters').send_keys(solution, Keys.ENTER)
-    driver.implicitly_wait(1)
+    # remove captcha, test to see if captcha exists first
+    try:
+        captcha_img = driver.find_element(By.XPATH, '//*[@div="a-row a-text-center"]//img').get_attribute('src')
+        captcha = AmazonCaptcha.fromlink(captcha_img)
+        solution = captcha.solve()
 
-    # WebDriverWait(driver, 5).until(
-    #     EC.presence_of_element_located((By.ID, 'twotabsearchtextbox'))
-    # )
+        driver.find_element(By.ID, 'captchacharacters').click()
+        driver.find_element(By.ID, 'captchacharacters').send_keys(solution, Keys.ENTER)
+        driver.implicitly_wait(1)
+    except NoSuchElementException:
+        print('No Captcha Found (Amazon)\n')
 
+    # find and click on Amazon's search bar
+    WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located((By.ID, 'twotabsearchtextbox'))
+    )
     driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').click()
+
     # search_bar.find_element(By.ID, 'twotabsearchtextbox').click()
     # driver.find_element(By.ID, 'twotabsearchtextbox')
     driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').send_keys(item_title, Keys.ENTER)
@@ -91,23 +96,24 @@ def bestbuy_to_amazon(item_url) -> str:
     # )
     # print(type(item))
 
-    results = []
+    # gets the first few results title from Amazon (not sponsored listings)
+    results = {}
     for i in range(2, 6):
         try:
+            # find the listing's title
             result_title = driver.find_element(By.XPATH,f'/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/'
                                                         f'div[1]/div[{i}]/div/div/span/div/div/div/div[2]/div/div/'
                                                         f'div[1]/a/h2/span')
-            # if element is 'sponsored', continue
+            # if element is 'sponsored', skip over it
         except NoSuchElementException:
             continue
 
-        results.append(result_title.text)
+        # add title (key) to results with the index that it was founded (value)
+        results[result_title] = i
 
+    # prints the results title of the listings
     for item in results:
         print(item)
-
-    # does a 'fuzzy string search' to return the best match
-    # results_match =
 
     # retrieves the current url from amazon.com of the matching product
     item_to_amazon = driver.current_url
@@ -116,7 +122,7 @@ def bestbuy_to_amazon(item_url) -> str:
 
     return item_to_amazon
 
-
+# testing getting amazon link
 x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384')
 print(x)
 
