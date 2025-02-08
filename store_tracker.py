@@ -97,6 +97,7 @@ def bestbuy_to_amazon(item_url) -> str:
     # print(type(item))
 
     # gets the first few results title from Amazon (not sponsored listings)
+    # can be used to find best result, but for now, we are only using the first result
     results = {}
     for i in range(2, 6):
         try:
@@ -112,19 +113,23 @@ def bestbuy_to_amazon(item_url) -> str:
         results[result_title] = i
 
     # prints the results title of the listings
-    for item in results:
-        print(item)
+    # for item in results:
+    #     print(item.text)
 
     # retrieves the current url from amazon.com of the matching product
+    click_index = list(results.values())[0]
+    driver.find_element(By.XPATH, f'/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/'
+                                        f'div[1]/div[{click_index}]/div/div/span/div/div/div/div[2]/div/div/'
+                                        f'div[1]/a/h2/span').click()
+    driver.implicitly_wait(1)
     item_to_amazon = driver.current_url
-
     driver.quit()
 
     return item_to_amazon
 
 # testing getting amazon link
-x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384')
-print(x)
+# x = bestbuy_to_amazon('https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384')
+# print(x)
 
 
 # takes in a link from amazon.comb and outputs a string to bestbuy.com
