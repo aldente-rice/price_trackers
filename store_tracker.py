@@ -108,7 +108,6 @@ def bestbuy_to_amazon(item_url) -> str:
             # if element is 'sponsored', skip over it
         except NoSuchElementException:
             continue
-
         # add title (key) to results with the index that it was founded (value)
         results[result_title] = i
 
@@ -135,4 +134,40 @@ def bestbuy_to_amazon(item_url) -> str:
 # takes in a link from amazon.comb and outputs a string to bestbuy.com
 # finds the best match based on the product item
 def amazon_to_bestbuy(item_url) -> str:
-    return ""
+    driver = webdriver.Firefox()
+    driver.get(item_url)
+    time.sleep(0.5)
+
+    # remove captcha, test to see if captcha exists first
+    try:
+        captcha_img = driver.find_element(By.XPATH, '//*[@div="a-row a-text-center"]//img').get_attribute('src')
+        captcha = AmazonCaptcha.fromlink(captcha_img)
+        solution = captcha.solve()
+
+        driver.find_element(By.ID, 'captchacharacters').click()
+        driver.find_element(By.ID, 'captchacharacters').send_keys(solution, Keys.ENTER)
+        driver.implicitly_wait(1)
+    except NoSuchElementException:
+        print('No Captcha Found (Amazon)\n')
+
+    item_title = driver.find_element(By.ID, 'productTitle').text
+    # print(item_title)
+    driver.get('https://www.bestbuy.com/')
+    driver.implicitly_wait(1)
+
+    driver.find_element(By.ID, 'gh-search-input').click()
+    driver.find_element(By.ID, 'gh-search-input').send_keys(item_title)
+    driver.find_element(By.CLASS_NAME, 'header-search-button').click()
+    driver.implicitly_wait(1)
+    driver.find_element(By.CLASS_NAME, 'product-image ').click()
+
+    # find_price = driver.find_element(By.CLASS_NAME, 'priceView-hero-price').text.split()
+    # price = float(find_price[0][1:])
+    # print(price, ' | type is: ', type(price))
+
+    item_to_bestbuy = driver.current_url
+    driver.quit()
+
+    return item_to_bestbuy
+
+# print(amazon_to_bestbuy('https://www.amazon.com/Apple-Headphones-Cancellation-Transparency-Personalized/dp/B0DGJ7HYG1/ref=sr_1_1?crid=227UOL5IM75V4&dib=eyJ2IjoiMSJ9.ilo9fkrYdOqmSNlTL9iUbgoVlb9Bg0ObgIWOyfyuZDXu3z5czi-xnqWEtM3kqxwP89dgikoLr7TM-ND4m0YwqM2ncKOcPpyOA0zm7U5wn3sBFsaWM7iP6q0Q_RxYsiDno1nDX8Tl4fnmBb8xUeBhl62spKRgtAWvQkYAf8Xippt23yIZIb5-MzFuSA_Dkm1ThK2-w_44IknZqCbwSJznWGv1Bv9-wdTUmNAmc39C2Y8.DaeCRXojLw6fxGnM-600uWls9_taH3tNfHmoucIBYW8&dib_tag=se&keywords=air%2Bpods%2B4&qid=1739046304&sprefix=air%2Bpods%2B4%2Caps%2C82&sr=8-1&th=1'))
