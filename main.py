@@ -12,9 +12,11 @@ print(df.head())
 temp_link_bb = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
 price_1 = track_best_buy(temp_link_bb)
 temp_link_am = bestbuy_to_amazon(temp_link_bb)
+# print(temp_link_am)
 price_2 = track_amazon(temp_link_am)
 
-print('BestBuy: ', price_1, '\nAmazon: ', track_amazon(price_2))
+print(price_1)
+print(price_2)
 
 # print(df.head())
 

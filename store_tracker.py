@@ -8,10 +8,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 from amazoncaptcha import AmazonCaptcha
 
 
-def track_best_buy(item_url) -> float:
+def track_best_buy(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
     time.sleep(0.5)
+
+    item_title = driver.find_element(By.CLASS_NAME, 'heading-4').text
 
     price_element = driver.find_element(By.CLASS_NAME, 'priceView-hero-price')
     price = price_element.find_element(By.TAG_NAME, 'span').text
@@ -20,7 +22,7 @@ def track_best_buy(item_url) -> float:
     price = float(price)
     driver.quit()
 
-    return price
+    return [price, item_title]
 
 
 # x = track_best_buy('https://www.bestbuy.com/site/razer-blade-16-16-gaming-laptop-dual-mini-led-4k-uhd-fhd-intel-i9'
@@ -28,10 +30,12 @@ def track_best_buy(item_url) -> float:
 # print(x)
 
 
-def track_amazon(item_url) -> float:
+def track_amazon(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
     time.sleep(0.5)
+
+    item_title = driver.find_element(By.ID, 'productTitle').text
 
     price_element = driver.find_element(By.CLASS_NAME, 'a-price-whole')
     price = float(price_element.text)
@@ -39,7 +43,7 @@ def track_amazon(item_url) -> float:
     price += float(price_cent_element.text) * 0.01  # convert to cents
     driver.quit()
 
-    return price
+    return [price, item_title]
 
 
 # y = track_amazon('https://www.amazon.com/Racing-Gaming-Simulator-Bundle-Steering-PC/dp/B07DW25P3R/ref=pd_ci'
@@ -67,8 +71,14 @@ def bestbuy_to_amazon(item_url) -> str:
     driver.get('https://www.amazon.com/')
     driver.implicitly_wait(1)
     # remove captcha, test to see if captcha exists first
+    WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, 'div.a-row:nth-child(2) > img:nth-child(1)'))
+    )
+
     try:
-        captcha_img = driver.find_element(By.XPATH, '//*[@div="a-row a-text-center"]//img').get_attribute('src')
+        captcha_img = driver.find_element(By.XPATH,
+                                          '/html/body/div/div[1]/div[3]/div/div/form/div[1]'
+                                        '/div/div/div[1]/img').get_attribute('src')
         captcha = AmazonCaptcha.fromlink(captcha_img)
         solution = captcha.solve()
 
@@ -133,6 +143,7 @@ def bestbuy_to_amazon(item_url) -> str:
 
 # takes in a link from amazon.comb and outputs a string to bestbuy.com
 # finds the best match based on the product item
+#
 def amazon_to_bestbuy(item_url) -> str:
     driver = webdriver.Firefox()
     driver.get(item_url)
