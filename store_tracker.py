@@ -14,7 +14,7 @@ from amazoncaptcha import AmazonCaptcha
 # @returns
 # price: the price (float)
 # item_title: the product listing name (str)
-def track_best_buy(item_url) -> [float, str]:
+def track_bestbuy(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
     time.sleep(0.5)

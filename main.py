@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib
-from store_tracker import track_best_buy, track_amazon, bestbuy_to_amazon, amazon_to_bestbuy
+from store_tracker import track_bestbuy, track_amazon, bestbuy_to_amazon, amazon_to_bestbuy
 
 
 pd.set_option('display.max_columns', None) # displays all columns
@@ -10,7 +10,7 @@ print(df.head())
 
 # gathers information (price, URLs, date modified)
 temp_link_bb = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
-price_1 = track_best_buy(temp_link_bb)
+price_1 = track_bestbuy(temp_link_bb)
 temp_link_am = bestbuy_to_amazon(temp_link_bb)
 # print(temp_link_am)
 price_2 = track_amazon(temp_link_am)
