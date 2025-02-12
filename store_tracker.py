@@ -8,6 +8,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 from amazoncaptcha import AmazonCaptcha
 
 
+# takes in a user-input url
+# scrapes Best Buy for the price and the item name
+#
+# @returns
+# price: the price (float)
+# item_title: the product listing name (str)
 def track_best_buy(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
@@ -30,6 +36,12 @@ def track_best_buy(item_url) -> [float, str]:
 # print(x)
 
 
+# takes in a user-input url
+# scrapes Amazon for the price and the item name
+#
+# @returns
+# price: the price (float)
+# item_title: the product listing name (str)
 def track_amazon(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
