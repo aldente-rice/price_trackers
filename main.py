@@ -1,6 +1,14 @@
 import pandas as pd
 import matplotlib
 from store_tracker import track_bestbuy, track_amazon, bestbuy_to_amazon, amazon_to_bestbuy
+from datetime import datetime
+
+
+# Gets the current date and time 'MM/DD/YYYY HH:MM'
+# now = datetime.now()
+# x = now.strftime("%m/%d/%Y %H:%M")
+#
+# print(x.split())
 
 
 pd.set_option('display.max_columns', None) # displays all columns
@@ -18,7 +26,21 @@ price_2 = track_amazon(temp_link_am)
 print(price_1)
 print(price_2)
 
-# print(df.head())
+data = {
+    'item_name':price_1[1],
+    'bestbuy_url':temp_link_bb,
+    'bestbuy_price':price_1[0],
+    'amazon_url':temp_link_am,
+    'amazon_price':price_2[0],
+    'price_diff':abs(price_1 - price_2),
+    'time_updated': '2/25/2025',
+    'date_updated': '15:48'
+}
+
+with open('price_data.csv', 'a') as f:
+    df.to_csv(f)
+
+print(df.head())
 
 
 # @parameters
