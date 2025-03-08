@@ -83,9 +83,9 @@ def bestbuy_to_amazon(item_url) -> str:
     driver.get('https://www.amazon.com/')
     driver.implicitly_wait(1)
     # remove captcha, test to see if captcha exists first
-    WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, 'div.a-row:nth-child(2) > img:nth-child(1)'))
-    )
+    # WebDriverWait(driver, 5).until(
+    #     EC.presence_of_element_located((By.CSS_SELECTOR, 'div.a-row:nth-child(2) > img:nth-child(1)'))
+    # )
 
     try:
         captcha_img = driver.find_element(By.XPATH,
@@ -101,14 +101,17 @@ def bestbuy_to_amazon(item_url) -> str:
         print('No Captcha Found (Amazon)\n')
 
     # find and click on Amazon's search bar
+
     WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.ID, 'twotabsearchtextbox'))
+        EC.presence_of_element_located((By.XPATH, '//*[@id="nav-bb-search"]'))
     )
-    driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').click()
+    # driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').click()
+    driver.find_element(By.XPATH, '//*[@id="nav-bb-search"]').click()
 
     # search_bar.find_element(By.ID, 'twotabsearchtextbox').click()
     # driver.find_element(By.ID, 'twotabsearchtextbox')
-    driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').send_keys(item_title, Keys.ENTER)
+    # driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').send_keys(item_title, Keys.ENTER)
+    driver.find_element(By.XPATH, '//*[@id="nav-bb-search"]').send_keys(item_title, Keys.ENTER)
     time.sleep(2)
 
     # finds the best match of the first three results
