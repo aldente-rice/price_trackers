@@ -33,6 +33,10 @@ Documentation
 Selenium: https://www.selenium.dev/documentation/
 amazoncaptcha: https://pypi.org/project/amazoncaptcha/
 
+API
+AWS Cost Explorer: https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html
+    - to gather price data from Amazon
+
 Other
 bypass Google's captcha:
     https://stackoverflow.com/questions/58872451/how-can-i-bypass-the-google-captcha-with-selenium-and-python
