@@ -19,11 +19,11 @@ time = x.split()[1]
 # print(x.split())
 
 # Gathers information (price, URLs, date modified)
-temp_link_bb:str = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
-price_1:float = track_bestbuy(temp_link_bb)
-temp_link_am:str = bestbuy_to_amazon(temp_link_bb)
-# print(temp_link_am)
-price_2:float = track_amazon(temp_link_am)
+# temp_link_bb:str = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
+# price_1:float = track_bestbuy(temp_link_bb)
+# temp_link_am:str = bestbuy_to_amazon(temp_link_bb)
+# # print(temp_link_am)
+# price_2:float = track_amazon(temp_link_am)
 
 # print(price_1)
 # print(price_2)

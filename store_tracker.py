@@ -46,7 +46,10 @@ def track_amazon(item_url) -> [float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
     time.sleep(0.5)
-
+    # try:
+    #     item_title = driver.find_element(By.ID, 'productTitle').text
+    # except NoSuchElementException:
+    #
     item_title = driver.find_element(By.ID, 'productTitle').text
 
     price_element = driver.find_element(By.CLASS_NAME, 'a-price-whole')
@@ -102,9 +105,9 @@ def bestbuy_to_amazon(item_url) -> str:
 
     # find and click on Amazon's search bar
 
-    WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="nav-bb-search"]'))
-    )
+    # WebDriverWait(driver, 5).until(
+    #     EC.presence_of_element_located((By.XPATH, '//*[@id="nav-bb-search"]'))
+    # )
     # driver.find_element(By.XPATH, '//*[@id="twotabsearchtextbox"]').click()
     driver.find_element(By.XPATH, '//*[@id="nav-bb-search"]').click()
 
