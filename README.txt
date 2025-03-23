@@ -34,8 +34,8 @@ Selenium: https://www.selenium.dev/documentation/
 amazoncaptcha: https://pypi.org/project/amazoncaptcha/
 
 API
-AWS Cost Explorer: https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html
-    - to gather price data from Amazon
+ebay developer program: https://developer.ebay.com/
+
 
 Other
 bypass Google's captcha:
