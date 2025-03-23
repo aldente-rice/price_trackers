@@ -14,10 +14,16 @@ from amazoncaptcha import AmazonCaptcha
 # @returns
 # price: the price (float)
 # item_title: the product listing name (str)
-def track_bestbuy(item_url) -> [float, str]:
+def track_bestbuy(item_url) -> [str, str, float, str]:
     driver = webdriver.Firefox()
     driver.get(item_url)
     time.sleep(0.5)
+
+    model_num = driver.find_element(By.XPATH, '/html/body/div[5]/main/div[6]/div/div/div/div/div/div/div[7]/'
+                                              'div[1]/div/div[2]/div/div/div/div[3]/div/div[1]/span[2]').text
+    model_sku = driver.find_element(By.XPATH, '/html/body/div[5]/main/div[6]/div/div/div/div/div/div/div[7]/'
+                                              'div[1]/div/div[2]/div/div/div/div[3]/div/div[2]/span[2]').text
+
 
     item_title = driver.find_element(By.CLASS_NAME, 'heading-4').text
 
@@ -26,9 +32,10 @@ def track_bestbuy(item_url) -> [float, str]:
     price = price.replace(',', '')
     price = price.replace('$', '')
     price = float(price)
+
     driver.quit()
 
-    return [price, item_title]
+    return [model_num, model_sku, price, item_title]
 
 
 # x = track_best_buy('https://www.bestbuy.com/site/razer-blade-16-16-gaming-laptop-dual-mini-led-4k-uhd-fhd-intel-i9'

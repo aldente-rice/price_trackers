@@ -11,12 +11,25 @@ from datetime import datetime
 # print(df.head())
 
 # Gets the current date and time 'MM/DD/YYYY HH:MM'
-now = datetime.now()
-x = now.strftime("%m/%d/%Y %H:%M")
-x.split()
-date = x.split()[0]
-time = x.split()[1]
+now = datetime.now().strftime("%m/%d/%Y %H:%M")
+# x = now.strftime("%m/%d/%Y %H:%M")
+# x.split()
+# date = x.split()[0]
+# time = x.split()[1]
 # print(x.split())
+
+data = []
+
+# [model_num, model_sku, price, item_title]
+description = track_bestbuy("https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384")
+data.append({"time":now, "model_num":description[0], "model_sku":description[1],
+             "price":description[2], "item_title":description[3]})
+
+df = pd.DataFrame(data)
+print(df.head())
+
+
+
 
 # Gathers information (price, URLs, date modified)
 # temp_link_bb:str = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
@@ -43,16 +56,16 @@ time = x.split()[1]
 #     f.write(data)
 
 # columns: item_name, bestbuy_url, bestbuy_price, amazon_url, amazon_price, price_diff, time_updated, date_updated
-fields=[price_1[1], temp_link_bb, price_1[0], temp_link_am, price_2[0],
-        abs(price_1[0] - price_2[0]), time, date]
+# fields=[price_1[1], temp_link_bb, price_1[0], temp_link_am, price_2[0],
+#         abs(price_1[0] - price_2[0]), time, date]
 
 # the r before file name is to avoid escape characters
-with open(r'price_data.csv', 'a', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(fields)
-
-df = pd.read_csv('price_data.csv')
-print(df.head())
+# with open(r'price_data.csv', 'a', newline='') as f:
+#     writer = csv.writer(f)
+#     writer.writerow(fields)
+#
+# df = pd.read_csv('price_data.csv')
+# print(df.head())
 
 
 # @parameters
