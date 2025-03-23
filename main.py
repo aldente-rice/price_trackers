@@ -29,8 +29,6 @@ df = pd.DataFrame(data)
 print(df.head())
 
 
-
-
 # Gathers information (price, URLs, date modified)
 # temp_link_bb:str = 'https://www.bestbuy.com/site/apple-airpods-4-white/6447384.p?skuId=6447384'
 # price_1:float = track_bestbuy(temp_link_bb)
