@@ -6,6 +6,17 @@ from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from amazoncaptcha import AmazonCaptcha
+import requests
+
+response = requests.get("http://api.open-notify.org/this-api-doesnt-exist")
+print(response)
+
+#
+def track_ebay() -> [str, str, float, ]:
+
+
+    return None
+
 
 
 # takes in a user-input url
@@ -207,3 +218,7 @@ def amazon_to_bestbuy(item_url) -> str:
     return item_to_bestbuy
 
 # print(amazon_to_bestbuy('https://www.amazon.com/Apple-Headphones-Cancellation-Transparency-Personalized/dp/B0DGJ7HYG1/ref=sr_1_1?crid=227UOL5IM75V4&dib=eyJ2IjoiMSJ9.ilo9fkrYdOqmSNlTL9iUbgoVlb9Bg0ObgIWOyfyuZDXu3z5czi-xnqWEtM3kqxwP89dgikoLr7TM-ND4m0YwqM2ncKOcPpyOA0zm7U5wn3sBFsaWM7iP6q0Q_RxYsiDno1nDX8Tl4fnmBb8xUeBhl62spKRgtAWvQkYAf8Xippt23yIZIb5-MzFuSA_Dkm1ThK2-w_44IknZqCbwSJznWGv1Bv9-wdTUmNAmc39C2Y8.DaeCRXojLw6fxGnM-600uWls9_taH3tNfHmoucIBYW8&dib_tag=se&keywords=air%2Bpods%2B4&qid=1739046304&sprefix=air%2Bpods%2B4%2Caps%2C82&sr=8-1&th=1'))
+
+
+
+
